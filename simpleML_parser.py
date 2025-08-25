@@ -117,6 +117,7 @@ class SimpleMLParser:
             'js': lambda x: f"<script></script>",
             'csslink': lambda x: f'<link rel="stylesheet" href="{x}">',
             'jslink': lambda x: f"<script src={x}>",
+            
             # Miscellaneous
             'blockquote': lambda x: f"<blockquote>{x}</blockquote>",
             'pre': lambda x: f"<pre>{x}</pre>",
