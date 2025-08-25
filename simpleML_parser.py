@@ -5,7 +5,7 @@ class SimpleMLParser:
         self.markup = markup
 
     def parse(self):
-        # Tag to HTML mapping (20 tags)
+        # Tag to HTML mapping (now with JS support)
         tag_map = {
             'title': lambda x: f"<h1>{x}</h1>",
             'heading': lambda x: f"<h2>{x}</h2>",
@@ -17,6 +17,10 @@ class SimpleMLParser:
             'strike': lambda x: f"<del>{x}</del>",
             'list': lambda x: f"<ul>{''.join([f'<li>{i.strip()}</li>' for i in x.split('|')])}</ul>",
             'numbered': lambda x: f"<ol>{''.join([f'<li>{i.strip()}</li>' for i in x.split('|')])}</ol>",
+            'css': lambda x: f"<style>{x}</style>",
+            'csslink': lambda x: f'<link rel="stylesheet" href="{x}" />',
+            'js': lambda x: f"<script>{x}</script>",
+            'jslink': lambda x: f'<script src="{x}"></script>',
             'quote': lambda x: f"<blockquote>{x}</blockquote>",
             'link': lambda x: f"<a href='{x.split('|')[0]}'>{x.split('|')[1]}</a>" if '|' in x else x,
             'image': lambda x: f"<img src='{x.split('|')[0]}' alt='{x.split('|')[1] if '|' in x else ''}' />",
@@ -61,6 +65,14 @@ if __name__ == "__main__":
     (center)Centered text(end center)
     (right)Right aligned text(end right)
     (left)Left aligned text(end left)
+    (css)
+    body { background: #f4f8fb; }
+    h1 { color: #2176ff; }
+    (end css)
+    (js)
+    function sayHello() { alert('Hello from SimpleML!'); }
+    (end js)
+    (jslink)myscript.js(end jslink)
     """
     parser = SimpleMLParser(simpleml_doc)
     html_result = parser.parse()
