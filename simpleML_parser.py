@@ -5,22 +5,17 @@ class SimpleMLParser:
         self.markup = markup
 
     def parse(self):
-        # Define tag to HTML mapping
+        # Tag to HTML mapping
         tag_map = {
-            'title': lambda x: f"<title>{x}</title>",
-            'heading': lambda x: f"<h1>{x}</h1>",
-            'heading2': lambda x: f"<h2>{x}</h2>",
-            'heading3': lambda x: f"<h3>{x}</h3>",
-            'heading4': lambda x: f"<h4>{x}</h4>",
-            'heading5': lambda x: f"<h5>{x}</h5>",
-            'heading6': lambda x: f"<h6>{x}</h6>",
+            'title': lambda x: f"<h1>{x}</h1>",
+            'heading': lambda x: f"<h2>{x}</h2>",
             'text': lambda x: f"<p>{x}</p>",
-            'code': lambda x: f"<pre><code>{x}</code></pre>",
+            'code': lambda x: f"<pre><code>{x}</code></pre>"
         }
-        # Pattern to match <tag>content</tag>
-        pattern = re.compile(r"((\w+))(.*?)(e \1)", re.DOTALL)
+        # Pattern to match (tag)content(end tag)
+        pattern = re.compile(r"\((\w+)\)(.*?)\(end \1\)", re.DOTALL)
         html_output = self.markup
-        # Replace each SimpleML tag with corresponding HTML
+        # Replace each tag with HTML
         for match in pattern.finditer(self.markup):
             tag, content = match.groups()
             if tag in tag_map:
@@ -30,7 +25,10 @@ class SimpleMLParser:
 
 if __name__ == "__main__":
     simpleml_doc = """
-    (heading)Hello World!(e heading)
+    (title)My Document(end title)
+    (heading)Introduction(end heading)
+    (text)This is the first paragraph of my document.(end text)
+    (code)print("Hello, World!")(end code)
     """
     parser = SimpleMLParser(simpleml_doc)
     html_result = parser.parse()
