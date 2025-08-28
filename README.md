@@ -13,5 +13,4 @@ But in SimpleML
 ```
 ### More Features that will be added
 - Supporting the .sml format as SimpleML Document
-- Add Support of styling with CSS
-- Add Support of scripting with python and JS
+- Connecting code to a pip package
