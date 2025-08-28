@@ -101,9 +101,9 @@ class SimpleMLParser:
             # Scripts and embeds
             'script': lambda content, attrs="": f"<script{attrs}>{content}</script>",
             'noscript': lambda content, attrs="": f"<noscript{attrs}>{content}</noscript>",
-            'embed': lambda content, attrs="": f"<embed src='{content}'{attrs} />",
-            'object': lambda content, attrs="": f"<object data='{content}'{attrs}></object>",
-            'param': lambda content, attrs="": f"<param value='{content}'{attrs} />",
+            'embed': lambda content, attrs="": f"<embed{attrs} />",
+            'object': lambda content, attrs="": f"<object{attrs}>{content}</object>",
+            'param': lambda content, attrs="": f"<param{attrs} />",
             'canvas': lambda content, attrs="": f"<canvas{attrs}>{content}</canvas>",
 
             # Meta/info
@@ -113,8 +113,8 @@ class SimpleMLParser:
             'linkmeta': lambda content, attrs="": f"<link href='{content}'{attrs} />",
             'css': lambda content, attrs="": f"<style{attrs}>{content}</style>",
             'js': lambda content, attrs="": f"<script{attrs}>{content}</script>",
-            'csslink': lambda content, attrs="": f'<link rel="stylesheet" href="{content}"{attrs}>',
-            'jslink': lambda content, attrs="": f"<script src='{content}'{attrs}></script>",
+            'csslink': lambda content, attrs="": f'<link rel="stylesheet"{attrs}>',
+            'jslink': lambda content, attrs="": f"<script{attrs}></script>",
             
             # Miscellaneous
             'blockquote': lambda content, attrs="": f"<blockquote{attrs}>{content}</blockquote>",
@@ -132,12 +132,12 @@ class SimpleMLParser:
             'fieldsettag': lambda content, attrs="": f"<fieldset{attrs}>{content}</fieldset>", # to avoid clash
             'template': lambda content, attrs="": f"<template{attrs}>{content}</template>",
             'picture': lambda content, attrs="": f"<picture{attrs}>{content}</picture>",
-            'source': lambda content, attrs="": f"<source srcset='{content}'{attrs} />",
-            'track': lambda content, attrs="": f"<track src='{content}'{attrs} />",
+            'source': lambda content, attrs="": f"<source{attrs} />",
+            'track': lambda content, attrs="": f"<track{attrs} />",
             'svg': lambda content, attrs="": f"<svg{attrs}>{content}</svg>",
             'math': lambda content, attrs="": f"<math{attrs}>{content}</math>",
-            'iframe': lambda content, attrs="": f"<iframe src='{content}'{attrs}></iframe>",
-            'portal': lambda content, attrs="": f"<portal src='{content}'{attrs}></portal>",
+            'iframe': lambda content, attrs="": f"<iframe{attrs}>{content}</iframe>",
+            'portal': lambda content, attrs="": f"<portal{attrs}>{content}</portal>",
             'dialog': lambda content, attrs="": f"<dialog{attrs}>{content}</dialog>",
             'marktag': lambda content, attrs="": f"<mark{attrs}>{content}</mark>", # to avoid clash
         }
@@ -164,6 +164,7 @@ if __name__ == "__main__":
     simpleml_doc = """
 (title)My Test Document(/title)
 (text id="intro" class="main")This is a paragraph with attributes.(/text)
+(description id="desc")A description with an ID.(/description)
 (div)
     (heading)This is a heading inside a div(/heading)
     (list class="items")item 1|item 2|item 3(/list)
@@ -171,6 +172,9 @@ if __name__ == "__main__":
 (image src="/images/logo.png" alt="logo")(/image)
 (hr class="separator")(/hr)
 (link href="https://example.com" target="_blank")Click me(/link)
+(audio src="sound.mp3" id="player")Your browser does not support the audio element.(/audio)
+(csslink href="style.css")(/csslink)
+(jslink src="script.js")(/jslink)
 """
     parser = SimpleMLParser(simpleml_doc)
     html_result = parser.parse()
