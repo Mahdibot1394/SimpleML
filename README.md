@@ -9,7 +9,7 @@ In HTML a big heading code looks like this
 ```
 But in SimpleML
 ```
-(head1)Heading(end head1)
+(head1)Heading(/head)
 ```
 ### More Features that will be added
 - Supporting the .sml format as SimpleML Document
